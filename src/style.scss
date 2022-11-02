@@ -1,0 +1,261 @@
+:root {
+  --bg-color: #dcece6;
+  --field-bg-color: #cbddee;
+  --field-disabled-bg-color: #a0aec0;
+  --field-danger-one-bg-color: #1fc1e8;
+  --field-danger-two-bg-color: #ffde42;
+  --field-danger-three-bg-color: #fa4599;
+  --field-danger-four-bg-color: #202124;
+  --light-text-color: #fdfefe;
+  --dark-text-color: #2b2b2b;
+
+  font-family: 'Press Start 2P', cursive;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: var(--light-text-color);
+  background-color: var(--bg-color);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.game, .game__board {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.game__title {
+  font-size: 3.5rem;
+  filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+}
+
+.game__stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1.5rem;
+  color: var(--dark-text-color);
+
+  & .game__stats--item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--field-bg-color);
+    padding: 0.5rem;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    & .icon {
+      margin-top: -8px;
+    }
+  }
+}
+
+.game__board {
+  position: relative;
+
+  .game__board--fields {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 0.15rem;
+
+    & .field {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 100%;
+      color: var(--light-text-color);
+      background-color: var(--light-text-color);
+      width: 43px;
+      height: 43px;
+      border: 1px solid var(--light-text-color);
+      border-bottom: 2px outset var(--light-text-color);
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      cursor: pointer;
+
+      &:disabled {
+        background-color: var(--field-disabled-bg-color);
+        border-color: var(--field-disabled-bg-color);
+        cursor: not-allowed;
+      }
+
+      &.danger-level-0 {
+        background-color: var(--field-bg-color);
+        border-color: var(--field-bg-color);
+        color: var(--field-bg-color);
+      }
+
+      &.danger-level-1 {
+        background-color: var(--field-danger-one-bg-color);
+        border-color: var(--field-danger-one-bg-color);
+      }
+
+      &.danger-level-2 {
+        background-color: var(--field-danger-two-bg-color);
+        border-color: var(--field-danger-two-bg-color);
+      }
+
+      &.danger-level-3 {
+        background-color: var(--field-danger-three-bg-color);
+        border-color: var(--field-danger-three-bg-color);
+      }
+
+      &.danger-level-4,
+      &.danger-level-5,
+      &.danger-level-6,
+      &.danger-level-7,
+      &.danger-level-8, {
+        background-color: var(--field-danger-four-bg-color);
+        border-color: var(--field-danger-four-bg-color);
+      }
+    }
+
+    &.easy {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+
+    &.medium {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+
+      & .field {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    &.hard {
+      grid-template-columns: repeat(20, minmax(0, 1fr));
+
+      & .field {
+        font-size: 0.45rem;
+        width: 21px;
+        height: 21px;
+      }
+    }
+  }
+
+  .game__board--overlay-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--field-bg-color);
+    opacity: 0.85;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+    & .game__board--overlay-panel-content {
+      width: inherit;
+      height: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      color: var(--dark-text-color);
+      text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff, 1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+
+      & .title {
+        margin: 0;
+        padding: 0;
+        font-size: 4rem;
+        line-height: 4.5rem;
+
+        &.win {
+          color: yellowgreen;
+        }
+
+        &.lose {
+          color: red;
+        }
+      }
+
+      & .help {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+.game__buttons {
+  margin-top: 1.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+
+  &.hidden {
+    visibility: hidden;
+  }
+
+  &.visible {
+    visibility: visible;
+  }
+
+  button {
+    font-family: 'Press Start 2P', cursive;
+    text-transform: uppercase;
+    padding: 10px;
+    color: var(--light-text-color);
+    background-color: var(--light-text-color);
+    border: 1px solid var(--light-text-color);
+    border-bottom: 2px outset var(--light-text-color);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:active {
+      box-shadow: none;
+      position: relative;
+      top: .2em;
+    }
+
+    &.game__buttons-button--easy {
+      background-color: #A77044;
+      border-color: #A77044;
+      box-shadow: 0 .1em #824A02;
+    }
+
+    &.game__buttons-button--medium {
+      background-color: #A7A7AD;
+      border-color: #A7A7AD;
+      box-shadow: 0 .1em #D7D7D7;
+    }
+
+    &.game__buttons-button--hard {
+      background-color: #FEE101;
+      border-color: #FEE101;
+      box-shadow: 0 .1em #D6AF36;
+    }
+  }
+}

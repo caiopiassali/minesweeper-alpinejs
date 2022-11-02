@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alpine.js Minesweeper</title>
+  <link rel="shortcut icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <main class="game" x-data="game">
+    <h1 class="game__title">Minesweeper</h1>
+
+    <div class="game__stats">
+      <div class="game__stats--item">
+        <span class="icon">💣</span>
+        <span x-text="bombAmount"></span>
+      </div>
+      <div class="game__stats--item">
+        <span class="icon">🚩</span>
+        <span x-text="flagsLeft"></span>
+      </div>
+      <div class="game__stats--item">
+        <span class="icon">🕑</span>
+        <span x-text="timeElapsed"></span>
+      </div>
+    </div>
+
+    <div class="game__board">
+      <section class="game__board--fields" x-ref="fields" :class="{[level]: true}">
+        <template x-for="field in fields" :key="field.id">
+          <button class="field"
+                  :id="field.id"
+                  :class="{[`danger-level-${field.dangerLevel}`]: field.opened}"
+                  :disabled="gameOver"
+                  x-text="fieldText(field)"
+                  @click.prevent="handleFieldClick(field)"
+                  @contextmenu.prevent="handleFieldLeftClick(field)"></button>
+        </template>
+      </section>
+
+      <template x-if="gameOver">
+        <section class="game__board--overlay-panel">
+          <div class="game__board--overlay-panel-content">
+            <h3 class="title" :class="{[gameOverStatus]: true}" x-text="gameOverStatusText"></h3>
+            <p class="help">Select difficulty to start a new game!</p>
+          </div>
+        </section>
+      </template>
+    </div>
+
+    <div class="game__buttons">
+      <button class="game__buttons-button game__buttons-button--easy" @click="startEasyLevelGame">
+        Easy
+      </button>
+      <button class="game__buttons-button game__buttons-button--medium" @click="startMediumLevelGame">
+        Medium
+      </button>
+      <button class="game__buttons-button game__buttons-button--hard" @click="startHardLevelGame">
+        Hard
+      </button>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
